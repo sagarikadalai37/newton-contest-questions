@@ -1,0 +1,7 @@
+if(n&1){out("No");return 0;}
+
+    FOR(i,n/2){
+
+    if(a[i]!=a[n/2+i]){out("No");return 0;}
+
+}
