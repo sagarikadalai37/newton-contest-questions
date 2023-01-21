@@ -1,0 +1,82 @@
+import java.io.*;
+import java.util.*;
+
+
+
+class Main {
+    static int[] getTimes(int [] time, int [] direction) {
+        Queue <Integer> enters = new LinkedList<Integer>();
+        Queue <Integer> exits = new LinkedList<Integer>();
+        int n = time.length;
+
+        int i=0;
+        for(i=0; i<n; i++) {
+            Queue <Integer> q = direction[i] == 1 ? exits : enters;
+            q.offer(i);
+        }
+
+        int [] result = new int[n];
+        int lastTime = -2;
+
+        Queue <Integer> lastQ = exits;
+        while(enters.size() > 0 && exits.size() > 0) {
+            int currentTime = lastTime + 1;
+            int peekEnterTime = time[enters.peek()];
+            int peekExitTime = time[exits.peek()];
+
+            Queue<Integer> q;
+            if(currentTime < peekEnterTime && currentTime < peekExitTime) {
+                q = (peekEnterTime < peekExitTime) ? enters : exits;
+                int personidx = q.poll();
+                result[personidx] = time[personidx];
+                lastTime=time[personidx];
+                lastQ = q;
+            } else {
+                if(currentTime >= peekEnterTime && currentTime >= peekExitTime) {
+                    q = lastQ;
+                } else {
+                    q = currentTime >= peekEnterTime ? enters : exits;
+
+                }
+                int personidx = q.poll();
+                result[personidx] = currentTime;
+                lastTime = currentTime;
+                lastQ = q;
+            }
+        }
+
+        Queue <Integer> q = enters.size() > 0 ? enters : exits;
+        while(q.size() > 0) {
+            int currentTime = lastTime + 1;
+            int personidx = q.poll();
+            if(currentTime < time[personidx]) {
+                currentTime = time[personidx];
+            }
+
+            result[personidx] = currentTime;
+            lastTime = currentTime;
+        }
+        return result;
+    }
+    public static void main (String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int [] Time = new int[n];
+        int i=0;
+
+        for(i=0; i<n; i++) {
+            Time[i] = input.nextInt();
+        }
+        int [] direction = new int[n];
+        for(i=0; i<n; i++) {
+            direction[i] = input.nextInt();
+        }
+
+        int [] res = new int[n];
+        res = getTimes(Time, direction);
+
+        for(i=0; i<n; i++) {
+            System.out.print(res[i] + " ");
+        }
+    }
+}
