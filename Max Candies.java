@@ -1,3 +1,8 @@
+//Given a 2*N matrix in which each cell contains some candies in it.
+//You are at the top left corner of the matrix and want to reach to the bottom right corner of the matrix 
+//i. e from (1, 1) to (2, N).
+//You can only move right or down. You have to find the maximum number of candies you can collect in you jouney.
+
 import java.util.*;
 import java.io.*;
 
