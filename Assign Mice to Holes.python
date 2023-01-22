@@ -1,0 +1,13 @@
+for i in range(int(input())):
+    N = int(input())
+    arr = [int(i) for i in input().split()]
+    arr1 = [int(i) for i in input().split()]
+    arr.sort()
+    arr1.sort()
+
+    time = 0
+    for i,j in zip(arr,arr1):
+        x = abs(i-j)
+        if x>time: time = x
+
+    print(time)
